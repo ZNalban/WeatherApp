@@ -12,7 +12,7 @@
             <button>search</button>
         </div>
         <div class="weather">
-            <h1 class="temp">22*C</h1>
+            <h1 class="temp">22°C</h1>
             <h2 class="city">Dubai</h2>
             <div class="details">
                 <div class="col">
@@ -31,4 +31,26 @@
         </div>
     </div>
 </body>
+
+<script>
+    const apiKey = "621c6cc088dc37204dbac04620725d74";
+    const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+    const searchBox = document.querySelector(".search input");
+    const searchBtn = document.querySelector(".search button");
+
+    async function checkWeather(city) {
+        const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+        data = await response.json();
+        console.log(data);
+
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + `°C`;
+        document.querySelector(".humidity").innerHTML = data.main.humidity + `%`;
+        document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+    }
+
+    searchBtn.addEventListener("click", () => checkWeather(searchBox.value));
+
+</script>
 </html>
